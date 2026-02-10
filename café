@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Café do Hiago</title>
+    <style>
+        /* Estilização "Bonitinha" e Moderna */
+        body {
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #fdf5e6; /* Creme quentinho */
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: #4b2c20;
+        }
+
+        #container {
+            text-align: center;
+            background: white;
+            padding: 40px;
+            border-radius: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            max-width: 400px;
+            transition: all 0.5s ease;
+        }
+
+        /* Animação do Café (O nosso "Esqueleto" visual) */
+        .cafe-icon {
+            font-size: 80px;
+            margin-bottom: 20px;
+            display: inline-block;
+            animation: balanco 3s ease-in-out infinite;
+        }
+
+        @keyframes balanco {
+            0%, 100% { transform: translateY(0) rotate(-5deg); }
+            50% { transform: translateY(-15px) rotate(5deg); }
+        }
+
+        h1 { font-size: 1.8rem; margin-bottom: 10px; }
+        p { font-size: 1.1rem; color: #6f4e37; margin-bottom: 30px; }
+
+        .botoes {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+        }
+
+        button {
+            padding: 12px 25px;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: transform 0.2s, background 0.3s;
+        }
+
+        .btn-sim { background-color: #6f4e37; color: white; }
+        .btn-nao { background-color: #e0e0e0; color: #555; }
+
+        button:hover { transform: scale(1.1); }
+
+        /* Classe para esconder elementos */
+        .hidden { display: none; }
+    </style>
+</head>
+<body>
+
+    <div id="container">
+        <div id="pergunta-area">
+            <div class="cafe-icon">☕</div>
+            <h1>Já tomou café?</h1>
+            <p>Hiago já preparou um cafézinho quentinho para você. Aceita uma xícara?</p>
+            
+            <div class="botoes">
+                <button class="btn-sim" onclick="responder('sim')">Sim, eu quero!</button>
+                <button class="btn-nao" id="btn-nao" onmouseover="fugir()" onclick="responder('nao')">Agora não</button>
+            </div>
+        </div>
+
+        <div id="resposta-area" class="hidden">
+            <div class="cafe-icon">✨</div>
+            <h1>Maravilha!</h1>
+            <p id="texto-final"></p>
+            <button class="btn-sim" onclick="location.reload()">Recomeçar</button>
+        </div>
+    </div>
+
+    <script>
+        // Função de interação
+        function responder(opcao) {
+            const perguntaArea = document.getElementById('pergunta-area');
+            const respostaArea = document.getElementById('resposta-area');
+            const textoFinal = document.getElementById('texto-final');
+
+            perguntaArea.classList.add('hidden');
+            respostaArea.classList.remove('hidden');
+
+            if(opcao === 'sim') {
+                textoFinal.innerText = "Preparando... O aroma já está subindo! ☕ O Hiago caprichou no grão.";
+            } else {
+                textoFinal.innerText = "Tudo bem! O café do Hiago vai ficar aqui quentinho te esperando.";
+            }
+        }
+
+        // Brincadeira: o botão "Não" foge se a pessoa tentar clicar (interação com a tela)
+        function fugir() {
+            const btnNao = document.getElementById('btn-nao');
+            // Só foge se for um desktop com mouse
+            if (window.innerWidth > 600) {
+                const x = Math.random() * (window.innerWidth - btnNao.offsetWidth);
+                const y = Math.random() * (window.innerHeight - btnNao.offsetHeight);
+                
+                btnNao.style.position = 'fixed';
+                btnNao.style.left = x + 'px';
+                btnNao.style.top = y + 'px';
+            }
+        }
+    </script>
+</body>
+</html>
